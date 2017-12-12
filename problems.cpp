@@ -73,22 +73,27 @@ void verticalordertraversal(TreeNode* root, vector<int> &traversal) {
 //copy bits from num2 in between m<=n positions to num1
 int replacemn(int num1, int num2, int m, int n){
 
+	//m should be less than n
 	if(m > n)
 		return num1;
 
+	//if upper bound is crossing the size of int
 	if(n > 8*sizeof(int))
 		return num1;
 
 	int ones = 0xFFFFFFFF;
 
+	//left end Eg: 11000000..
 	int uppermask = ones << n;
+	//right end Eg: 00001111..
 	int lowermask = ( 1 << (m) )-1;
-
+	//mask with 0 between m and n
 	int mask = uppermask | lowermask;
 
-	cout << mask << endl;
-	
+	//clear bits between m and n
 	num1 = num1 & mask;
+
+	//OR with the bits in num2
 	num1 = num1 | ( mask & num2) ;
 
 	return num1;
