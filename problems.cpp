@@ -70,10 +70,39 @@ void verticalordertraversal(TreeNode* root, vector<int> &traversal) {
 	return;
 }
 
+//copy bits from num2 in between m<=n positions to num1
+int replacemn(int num1, int num2, int m, int n){
+
+	if(m > n)
+		return num1;
+
+	if(n > 8*sizeof(int))
+		return num1;
+
+	int ones = 0xFFFFFFFF;
+
+	int uppermask = ones << n;
+	int lowermask = ( 1 << (m) )-1;
+
+	int mask = uppermask | lowermask;
+
+	cout << mask << endl;
+	
+	num1 = num1 & mask;
+	num1 = num1 | ( mask & num2) ;
+
+	return num1;
+}
+
 int main() {
 
 	vector<int> output;
 
-	TreeNode* root; // create tree
-	verticalordertraversal(root, output);
+	//vertical order traversal
+	//TreeNode* root; // create tree
+	//verticalordertraversal(root, output);
+
+	//replace m n
+	replacemn(107, 21, 2, 4);
+
 }
