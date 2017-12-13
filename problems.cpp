@@ -94,9 +94,49 @@ int replacemn(int num1, int num2, int m, int n){
 	num1 = num1 & mask;
 
 	//OR with the bits in num2
-	num1 = num1 | ( mask & num2) ;
+	num1 = num1 | ( ~mask & num2) ;
 
 	return num1;
+}
+
+bool isValidBST_helper2(TreeNode* root, TreeNode* minnode, TreeNode* maxnode){
+
+	if(root == NULL)
+		return true;
+
+	bool lval=false, rval=false;
+
+	if(minnode == NULL || ( minnode && (minnode->val < root->val) ) )
+		lval = true;
+
+	if(maxnode == NULL || (maxnode && (maxnode->val > root->val) ) )
+		rval = true;
+
+	if(lval && rval)
+		return isValidBST_helper2(root->left, minnode, root) && isValidBST_helper2(root->right, root, maxnode);
+
+	return false;
+}
+
+bool isValidBST_helper(TreeNode* root, int minval, int maxval){
+
+	if(root == NULL)
+		return true;
+
+	if(root->val > minval && root->val < maxval){
+		return isValidBST_helper(root->left, minval, root->val) && isValidBST_helper(root->right, root->val, maxval);
+	}
+
+	return false;
+}
+
+bool isValidBST(TreeNode* root) {
+
+	if(root == NULL)
+		return true;
+
+	//return isValidBST_helper(root, INT_MIN, INT_MAX);
+	return isValidBST_helper2(root, NULL, NULL);
 }
 
 int main() {
@@ -106,7 +146,7 @@ int main() {
 	//vertical order traversal
 	//TreeNode* root; // create tree
 	//verticalordertraversal(root, output);
-
+	
 	//replace m n
 	replacemn(107, 21, 2, 4);
 
