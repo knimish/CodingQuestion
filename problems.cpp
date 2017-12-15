@@ -139,6 +139,34 @@ bool isValidBST(TreeNode* root) {
 	return isValidBST_helper2(root, NULL, NULL);
 }
 
+//Find minimum number of coins needed for a given sum
+bool sumcoins(vector<int> &input, int remain, int &coins) {
+
+	if(remain == 0)
+		return true;
+
+	//if not sorted, find max element
+
+	//pick largest element
+	int i = input.size()-1;
+	while(i >= 0){
+		//till the denomination is greater than the remaining sum reduce
+		while( input[i] > remain ) i--;
+
+		//assume coin found
+		coins++;
+		if( !sumcoins(input, remain-input[i], coins) ){
+			//not possible, reduce denomination
+			i--;
+			coins--;
+		}
+		else
+			return true;
+	}
+
+	return false;
+}
+
 int main() {
 
 	vector<int> output;
@@ -148,6 +176,21 @@ int main() {
 	//verticalordertraversal(root, output);
 	
 	//replace m n
-	replacemn(107, 21, 2, 4);
+	//replacemn(107, 21, 2, 4);
+
+	//sumcoins
+	//if not sorted, sort the inputarr
+	vector<int> inputarr;
+	inputarr.push_back(1);
+	inputarr.push_back(5);
+	inputarr.push_back(10);
+	inputarr.push_back(25);
+	inputarr.push_back(50);
+	inputarr.push_back(100);
+
+	int sum = 24; int count = 0;
+
+	if( sumcoins(inputarr, sum, count) )
+		cout << "count: " << count << endl;
 
 }
