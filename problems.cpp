@@ -167,6 +167,35 @@ bool sumcoins(vector<int> &input, int remain, int &coins) {
 	return false;
 }
 
+//Find largest contiguous sum in given vector
+int largestcontiguoussum(vector<int> &input ) {
+	int currmax = 0;
+	int maxout = 0;
+
+	for(int i=0; i<input.size(); i++) {
+
+		currmax += input[i];
+		if(currmax < 0){
+			currmax = 0;
+		}
+
+		if(currmax > maxout){
+			maxout = currmax;
+		}
+	}
+
+	//if all numbers are negative, maxout will be 0 find smallest absolute number
+	//can be a condition when maxout is 0
+	if(maxout == 0){
+		maxout = INT_MIN;
+		for(int i=0; i<input.size(); i++){
+			if(input[i] > maxout) maxout = input[i];
+		}
+	}
+
+	return maxout;
+}
+
 int main() {
 
 	vector<int> output;
@@ -180,7 +209,8 @@ int main() {
 
 	//sumcoins
 	//if not sorted, sort the inputarr
-	vector<int> inputarr;
+	
+	/*vector<int> inputarr;
 	inputarr.push_back(1);
 	inputarr.push_back(5);
 	inputarr.push_back(10);
@@ -191,6 +221,16 @@ int main() {
 	int sum = 24; int count = 0;
 
 	if( sumcoins(inputarr, sum, count) )
-		cout << "count: " << count << endl;
+		cout << "count: " << count << endl;*/
+
+	vector<int> inputarr;
+	inputarr.push_back(-1);
+	inputarr.push_back(-2);
+	inputarr.push_back(-3);
+	inputarr.push_back(-5);
+	inputarr.push_back(-4);
+	inputarr.push_back(-9);
+
+	cout << largestcontiguoussum(inputarr) << endl;
 
 }
